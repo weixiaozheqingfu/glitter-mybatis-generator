@@ -81,7 +81,7 @@
 	</delete>
 
     <delete id="delete" parameterType="${package}.bean.${className?cap_first}">
-                delete from ${tableName}
+        delete from ${tableName}
         <where>
             <include refid="whereSql"/>
         </where>
@@ -112,7 +112,8 @@
 	</select>
 
     <select id="getByIds" resultMap="BaseResultMap">
-	    select <include refid="baseColumns"/> from ${tableName} where ${keyColumn.dbName} in
+	    select <include refid="baseColumns"/> from ${tableName}
+	    where ${keyColumn.dbName} in
 	    <foreach collection="array" item="item" index="index" open="(" close=")" separator=",">
             ${"#{"?html}${"item}"?html}
         </foreach>
