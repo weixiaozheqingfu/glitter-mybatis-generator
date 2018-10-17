@@ -28,7 +28,7 @@
     <sql id="whereSql">
         <#list columns as column>
         <#if (column.dataType?upper_case)=='STRING'>
-        <if test="${column.columnName} != null and ${column.columnName}!='' ">
+        <if test="${column.columnName} != null ">
             and ${column.dbName}=${"#{"?html}${column.columnName}${"}"?html}
 		</if>
        <#else>
@@ -44,7 +44,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list columns as column>
             <#if (column.dataType?upper_case)=='STRING'>
-            <if test="${column.columnName} != null and ${column.columnName}!='' ">
+            <if test="${column.columnName} != null ">
                 ${column.dbName},
             </if>
             <#else>
@@ -57,7 +57,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list columns as column>
             <#if (column.dataType?upper_case)=='STRING'>
-            <if test="${column.columnName} != null and ${column.columnName}!='' ">
+            <if test="${column.columnName} != null ">
                 ${"#{"?html}${column.columnName}${"}"?html},
             </if>
             <#else>
@@ -69,13 +69,31 @@
 		</trim>
     </insert>
 
+    <delete id="deleteById">
+        delete from ${tableName} where ${keyColumn.dbName} =${"#{"?html}${primaryKeyName}${"}"?html}
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from ${tableName} where ${keyColumn.dbName} in
+        <foreach collection="array" item="item" index="index"  open="(" close=")" separator=",">
+            ${"#{"?html}${"item}"?html}
+        </foreach>
+	</delete>
+
+    <delete id="delete" parameterType="${package}.bean.${className?cap_first}">
+                delete from ${tableName}
+        <where>
+            <include refid="whereSql"/>
+        </where>
+    </delete>
+
     <update id="updateById" parameterType="${package}.bean.${className?cap_first}">
         update ${tableName}  set
         <trim suffixOverrides=",">
         <#list columns as column>
         <#if column.columnName!=primaryKeyName>
         <#if (column.dataType?upper_case)=='STRING'>
-        <if test="${column.columnName} != null and ${column.columnName}!='' ">
+        <if test="${column.columnName} != null ">
             ${column.dbName}=${"#{"?html}${column.columnName}${"}"?html},
         </if>
         <#else>
@@ -89,21 +107,6 @@
         where ${keyColumn.dbName} =${"#{"?html}${primaryKeyName}${"}"?html}
 	</update>
 
-	<delete id="deleteById">
-        delete from ${tableName} where ${keyColumn.dbName} =${"#{"?html}${primaryKeyName}${"}"?html}
-    </delete>
-
-    <delete id="deleteByIds">
-        delete from ${tableName} where ${keyColumn.dbName} in
-        <foreach collection="array" item="item" index="index"  open="(" close=")" separator=",">
-            ${"#{"?html}${"item}"?html}
-        </foreach>
-	</delete>
-
-    <delete id="delete" parameterType="${package}.bean.${className?cap_first}">
-        delete from ${tableName} where 1=1 <include refid="whereSql"/>
-    </delete>
-
     <select id="getById" resultMap="BaseResultMap">
 	    select <include refid="baseColumns"/> from ${tableName} where ${keyColumn.dbName} =${"#{"?html}${primaryKeyName}${"}"?html}
 	</select>
@@ -116,7 +119,10 @@
 	</select>
 
 	<select id="get" resultMap="BaseResultMap" parameterType="${package}.bean.${className?cap_first}">
-        select <include refid="baseColumns"/> from ${tableName}  where 1=1 <include refid="whereSql"/> limit 1
+        select <include refid="baseColumns"/> from ${tableName}
+        <where>
+            <include refid="whereSql"/> limit 1
+        </where>
 	</select>
 
 	<select id="findAllList" resultMap="BaseResultMap">
@@ -124,15 +130,17 @@
 	</select>
 
 	<select id="findList"  parameterType="${package}.bean.${className?cap_first}" resultMap="BaseResultMap">
-        select <include refid="baseColumns"/> from ${tableName} where 1=1 <include refid="whereSql"/>
-	    <if test="orderBy != null and orderBy!='' ">
-            order by ${r'${orderBy}'}
-        </if>
+        select <include refid="baseColumns"/> from ${tableName}
+        <where>
+            <include refid="whereSql"/>
+        </where>
 	</select>
 
 	<select id="getCount"  parameterType="${package}.bean.${className?cap_first}" resultType="java.lang.Integer">
-        select count(1) from ${tableName} where 1=1
-        <include refid="whereSql"/>
+        select count(1) from ${tableName}
+        <where>
+            <include refid="whereSql"/>
+        </where>
     </select>
 
 </mapper>

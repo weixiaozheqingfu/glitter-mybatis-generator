@@ -6,6 +6,46 @@ import java.util.List;
 public interface I${upClassName}Dao{
 
     /**
+    * 插入操作
+    *
+    * @param ${className}
+    * @return
+    */
+    int insert(${upClassName} ${className});
+
+    /**
+    * 根据主键删除
+    *
+    * @param id
+    * @return
+    */
+    int deleteById(Long id);
+
+    /**
+    * 根据主键集合删除
+    *
+    * @param ids
+    * @return
+    */
+    int deleteByIds(Long[] ids);
+
+    /**
+    * 根据条件删除
+    *
+    * @param ${className}
+    * @return
+    */
+    int delete(${upClassName} ${className});
+
+    /**
+    * 根据主键更新
+    *
+    * @param ${className}
+    * @return
+    */
+    int updateById(${upClassName} ${className});
+
+    /**
      * 按主键查询
      *
      * @param id
@@ -51,45 +91,5 @@ public interface I${upClassName}Dao{
      * @return
      */
     int getCount(${upClassName} ${className});
-
-    /**
-     * 插入操作
-     *
-     * @param ${className}
-     * @return
-     */
-    int insert(${upClassName} ${className});
-
-    /**
-     * 根据主键更新
-     *
-     * @param ${className}
-     * @return
-     */
-    int updateById(${upClassName} ${className});
-
-    /**
-     * 根据主键删除
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(Long id);
-
-    /**
-     * 根据主键集合删除
-     *
-     * @param ids
-     * @return
-     */
-    int deleteByIds(Long[] ids);
-
-    /**
-     * 根据条件删除
-     *
-     * @param ${className}
-     * @return
-     */
-    int delete(${upClassName} ${className});
 
 }
