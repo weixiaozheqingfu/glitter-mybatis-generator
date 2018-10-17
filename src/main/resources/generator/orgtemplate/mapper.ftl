@@ -39,7 +39,7 @@
        </#list>
     </sql>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="${keyColumn.columnName}" parameterType="${package}.domain.${className?cap_first}">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="${keyColumn.columnName}" parameterType="${package}.bean.${className?cap_first}">
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list columns as column>
