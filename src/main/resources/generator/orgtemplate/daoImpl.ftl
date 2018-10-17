@@ -16,6 +16,31 @@ public class ${upClassName}DaoImpl implements I${upClassName}Dao{
     SqlSessionTemplate sqlSessionTemplate;
 
     @Override
+    public int insert(${upClassName} ${upClassName?uncap_first}) {
+        return sqlSessionTemplate.insert(NAME_SPACE + ".insert", ${upClassName?uncap_first});
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        return sqlSessionTemplate.delete(NAME_SPACE + ".deleteById", id);
+    }
+
+    @Override
+    public int deleteByIds(Long[] ids) {
+        return sqlSessionTemplate.delete(NAME_SPACE + ".deleteByIds", ids);
+    }
+
+    @Override
+    public int delete(${upClassName} ${upClassName?uncap_first}) {
+        return sqlSessionTemplate.delete(NAME_SPACE + ".delete", ${upClassName?uncap_first});
+    }
+
+    @Override
+    public int updateById(${upClassName} ${upClassName?uncap_first}) {
+        return sqlSessionTemplate.update(NAME_SPACE + ".update", ${upClassName?uncap_first});
+    }
+
+    @Override
     public ${upClassName} get${upClassName}ById(Long id) {
         return sqlSessionTemplate.selectOne(NAME_SPACE + ".getById", id);
     }
@@ -43,31 +68,6 @@ public class ${upClassName}DaoImpl implements I${upClassName}Dao{
     @Override
     public int getCount(${upClassName} ${upClassName?uncap_first}) {
         return sqlSessionTemplate.selectOne(NAME_SPACE + ".getCount", ${upClassName?uncap_first});
-    }
-
-    @Override
-    public int insert(${upClassName} ${upClassName?uncap_first}) {
-        return sqlSessionTemplate.insert(NAME_SPACE + ".insert", ${upClassName?uncap_first});
-    }
-
-    @Override
-    public int updateById(${upClassName} ${upClassName?uncap_first}) {
-        return sqlSessionTemplate.update(NAME_SPACE + ".update", ${upClassName?uncap_first});
-    }
-
-    @Override
-    public int deleteById(Long id) {
-        return sqlSessionTemplate.delete(NAME_SPACE + ".deleteById", id);
-    }
-
-    @Override
-    public int deleteByIds(Long[] ids) {
-        return sqlSessionTemplate.delete(NAME_SPACE + ".deleteByIds", ids);
-    }
-
-    @Override
-    public int delete(${upClassName} ${upClassName?uncap_first}) {
-        return sqlSessionTemplate.delete(NAME_SPACE + ".delete", ${upClassName?uncap_first});
     }
    
 }
