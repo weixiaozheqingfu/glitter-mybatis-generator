@@ -37,7 +37,7 @@ public class ${upClassName}DaoImpl implements I${upClassName}Dao{
 
     @Override
     public int updateById(${upClassName} ${upClassName?uncap_first}) {
-        return sqlSessionTemplate.update(NAME_SPACE + ".update", ${upClassName?uncap_first});
+        return sqlSessionTemplate.update(NAME_SPACE + ".updateById", ${upClassName?uncap_first});
     }
 
     @Override
